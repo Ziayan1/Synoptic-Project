@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ImprovingPhysicalHealthApp.LoginPage"
              Title="Login"
-             BackgroundColor="green">
+             Style="{StaticResource GreenPageStyle}">
+
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">

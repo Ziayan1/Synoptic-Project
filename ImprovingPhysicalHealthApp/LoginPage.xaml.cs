@@ -19,7 +19,7 @@ public partial class LoginPage : ContentPage
 
         if (ValidateLogin(username, password))
         {
-            Application.Current.MainPage = new AppShell();
+            Application.Current.MainPage = new HomePage();
         }
         else
         {

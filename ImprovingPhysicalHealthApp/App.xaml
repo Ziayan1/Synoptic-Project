@@ -5,7 +5,12 @@
 
     <Application.Resources>
 
-        <!-- Style for input fields -->
+        <!-- Page background style (dark green) -->
+        <Style x:Key="GreenPageStyle" TargetType="ContentPage">
+            <Setter Property="BackgroundColor" Value="#2E8B57" />
+        </Style>
+
+        <!-- Entry input style -->
         <Style x:Key="InputEntryStyle" TargetType="Entry">
             <Setter Property="BackgroundColor" Value="#f0f0f0" />
             <Setter Property="HeightRequest" Value="50" />
@@ -13,15 +18,7 @@
             <Setter Property="FontSize" Value="16" />
         </Style>
 
-        <!-- Style for primary buttons -->
-        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#007ACC" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="HeightRequest" Value="50" />
-        </Style>
-
-        <!-- Reusable page title style -->
+        <!-- Page title label style -->
         <Style x:Key="PageTitleStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="FontSize" Value="28" />
@@ -30,11 +27,22 @@
             <Setter Property="HorizontalOptions" Value="Center" />
         </Style>
 
+        <!-- Styled card-like button -->
+        <Style x:Key="CardButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#DAA520" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="HeightRequest" Value="80" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="0,10" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        </Style>
+
+        <!-- Error message style -->
         <Style x:Key="ErrorMessageStyle" TargetType="Label">
             <Setter Property="BackgroundColor" Value="#FFCCCC" />
-            <!-- Light red/pink -->
             <Setter Property="TextColor" Value="#990000" />
-            <!-- Dark red text -->
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Margin" Value="0,10,0,0" />
             <Setter Property="Padding" Value="10" />
@@ -42,8 +50,5 @@
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
-
-
     </Application.Resources>
-
 </Application>
