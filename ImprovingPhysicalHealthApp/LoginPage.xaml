@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ImprovingPhysicalHealthApp.LoginPage"
+             Title="Login"
+             BackgroundColor="green">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <Label Text="Improving Physical Health"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Username input -->
+            <Entry x:Name="usernameEntry"
+                   Placeholder="Username"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Password input -->
+            <Entry x:Name="passwordEntry"
+                   Placeholder="Password"
+                   IsPassword="True"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Login button -->
+            <Button Text="Login"
+                    Clicked="OnLoginClicked"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+
+            <!-- Message for login feedback -->
+            <Label x:Name="messageLabel"
+                   Style="{StaticResource ErrorMessageStyle}"
+                   IsVisible="False" />
+                   
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
