@@ -6,8 +6,10 @@ public partial class HomePage : ContentPage
     {
         InitializeComponent();
     }
-
-    private void OnBmiClicked(object sender, EventArgs e) { }
+    private void OnBmiClicked(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new BmiPage();
+    }
 
     private void OnCalorieClicked(object sender, EventArgs e) { }
 

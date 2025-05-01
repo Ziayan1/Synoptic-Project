@@ -50,5 +50,18 @@
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
+        <!-- Page info text style -->
+
+        <Style x:Key="InfoTextStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18" />
+            <!-- was 16 -->
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="LineBreakMode" Value="WordWrap" />
+        </Style>
+
+
+
     </Application.Resources>
 </Application>

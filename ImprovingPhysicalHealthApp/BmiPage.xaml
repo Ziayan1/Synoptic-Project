@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ImprovingPhysicalHealthApp.BmiPage"
+             Title="BMI Calculator"
+             Style="{StaticResource GreenPageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="BMI Calculator"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Gender picker -->
+            <Picker x:Name="genderPicker"
+                    Title="Select your gender"
+                    TextColor="Black"
+                    BackgroundColor="White">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Input fields -->
+            <Entry x:Name="heightEntry"
+                   Placeholder="Enter height in meters (e.g. 1.75)"
+                   Keyboard="Numeric"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <Entry x:Name="weightEntry"
+                   Placeholder="Enter weight in kg"
+                   Keyboard="Numeric"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Button -->
+            <Button Text="Calculate BMI"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnCalculateBmiClicked" />
+
+            <!-- Result display -->
+            <Label x:Name="bmiValueLabel"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   IsVisible="False" />
+
+            <Label x:Name="bmiAdviceLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
