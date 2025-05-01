@@ -52,7 +52,11 @@ public partial class BmiPage : ContentPage
             }
 
             bmiValueLabel.Text = $"BMI: {bmi:F1}";
+
             bmiAdviceLabel.Text = message;
+
+            UserData.Bmi = bmi;
+            UserData.Gender = gender;
 
             bmiValueLabel.IsVisible = true;
             bmiAdviceLabel.IsVisible = true;

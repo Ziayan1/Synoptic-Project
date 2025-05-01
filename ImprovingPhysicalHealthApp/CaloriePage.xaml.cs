@@ -5,16 +5,10 @@ public partial class CaloriePage : ContentPage
     double totalCalories = 0;
     double totalWater = 0;
 
-    // These should ideally come from BMI page, stored/shared globally.
-    double userBmi = 23.5;       // example fallback
-    string userGender = "Male";  // example fallback
-
     public CaloriePage()
     {
         InitializeComponent();
-
-        // You can fetch real BMI/gender from a shared storage later
-        ShowRecommendedIntake();
+        ShowRecommendation();
     }
 
     private void OnAddCaloriesClicked(object sender, EventArgs e)
@@ -23,7 +17,6 @@ public partial class CaloriePage : ContentPage
         {
             totalCalories += addedCalories;
             calorieEntry.Text = string.Empty;
-
             UpdateStatus();
         }
     }
@@ -34,44 +27,45 @@ public partial class CaloriePage : ContentPage
         {
             totalWater += addedWater;
             waterEntry.Text = string.Empty;
-
             UpdateStatus();
         }
     }
 
-    // Shows estimated daily calorie recommendation based on gender and BMI
-    private void ShowRecommendedIntake()
+    private void ShowRecommendation()
     {
-        int recommendation;
+        double bmi = UserData.Bmi ?? 22; // fallback just in case
+        string gender = UserData.Gender ?? "Male";
 
-        if (userGender == "Male")
-        {
-            recommendation = userBmi < 18.5 ? 2500 : (userBmi < 25 ? 2200 : 2000);
-        }
-        else
-        {
-            recommendation = userBmi < 18.5 ? 2100 : (userBmi < 24 ? 1900 : 1700);
-        }
+        int baseCalorie = gender == "Male" ? 2200 : 1900;
 
-        recommendedLabel.Text = $"Suggested daily intake: {recommendation} kcal";
+        if (bmi < 18.5)
+            baseCalorie += 200;
+        else if (bmi > 30)
+            baseCalorie -= 300;
+
+        recommendedLabel.Text = $"Recommended intake: approx. {baseCalorie} kcal/day";
         recommendedLabel.IsVisible = true;
     }
 
     private void UpdateStatus()
     {
-        statusLabel.Text = $"Today you've logged {totalCalories} kcal and {totalWater} ml water.";
+        statusLabel.Text = $"Calories logged today: {totalCalories} kcal\nWater: {totalWater} ml";
         statusLabel.IsVisible = true;
 
-        string message;
+        double bmi = UserData.Bmi ?? 22;
 
-        if (totalCalories < 1200)
-            message = "You’re under your intake. A healthy snack could help.";
-        else if (totalCalories < 2200)
-            message = "You’re doing great. Keep going!";
+        string feedback;
+
+        if (bmi > 30 && totalCalories > 2200)
+            feedback = "You're above your intake and BMI is high — try reducing calories gradually.";
+        else if (totalCalories < 1200)
+            feedback = "You're under your intake. A light meal or snack could help.";
+        else if (totalCalories <= 2200)
+            feedback = "You're doing well. Keep it balanced!";
         else
-            message = "You’ve gone above your target. That’s okay — just be mindful tomorrow.";
+            feedback = "You're a bit over — no worries, stay consistent tomorrow.";
 
-        feedbackLabel.Text = message;
+        feedbackLabel.Text = feedback;
         feedbackLabel.IsVisible = true;
     }
 
