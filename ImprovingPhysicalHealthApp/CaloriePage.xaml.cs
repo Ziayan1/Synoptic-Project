@@ -4,11 +4,20 @@ public partial class CaloriePage : ContentPage
 {
     double totalCalories = 0;
     double totalWater = 0;
+    int baseCalorie = 2200;
+    int baseWater = 2000;
 
     public CaloriePage()
     {
         InitializeComponent();
+        ShowDay();
         ShowRecommendation();
+    }
+
+    private void ShowDay()
+    {
+        var today = DateTime.Now.DayOfWeek;
+        dayLabel.Text = $"Tracking for: {today}";
     }
 
     private void OnAddCaloriesClicked(object sender, EventArgs e)
@@ -33,10 +42,11 @@ public partial class CaloriePage : ContentPage
 
     private void ShowRecommendation()
     {
-        double bmi = UserData.Bmi ?? 22; // fallback just in case
+        double bmi = UserData.Bmi ?? 22;
         string gender = UserData.Gender ?? "Male";
 
-        int baseCalorie = gender == "Male" ? 2200 : 1900;
+        baseCalorie = gender == "Male" ? 2200 : 1900;
+        baseWater = 2000;
 
         if (bmi < 18.5)
             baseCalorie += 200;
@@ -45,28 +55,55 @@ public partial class CaloriePage : ContentPage
 
         recommendedLabel.Text = $"Recommended intake: approx. {baseCalorie} kcal/day";
         recommendedLabel.IsVisible = true;
+
+        recommendedWaterLabel.Text = $"Recommended water: {baseWater} ml/day";
+        recommendedWaterLabel.IsVisible = true;
     }
 
     private void UpdateStatus()
     {
-        statusLabel.Text = $"Calories logged today: {totalCalories} kcal\nWater: {totalWater} ml";
-        statusLabel.IsVisible = true;
-
         double bmi = UserData.Bmi ?? 22;
 
-        string feedback;
+        // Calorie progress and feedback
+        calorieProgress.Progress = Math.Min(totalCalories / baseCalorie, 1);
+        calorieTotalLabel.Text = $"Total: {totalCalories} kcal";
 
-        if (bmi > 30 && totalCalories > 2200)
-            feedback = "You're above your intake and BMI is high — try reducing calories gradually.";
+        string calorieFeedback;
+        if (bmi > 30 && totalCalories > baseCalorie)
+            calorieFeedback = "You're above your intake and BMI is high — try reducing calories gradually.";
         else if (totalCalories < 1200)
-            feedback = "You're under your intake. A light meal or snack could help.";
-        else if (totalCalories <= 2200)
-            feedback = "You're doing well. Keep it balanced!";
+            calorieFeedback = "You're under your intake. A light meal or snack could help.";
+        else if (totalCalories <= baseCalorie)
+            calorieFeedback = "You're doing well. Keep it balanced!";
         else
-            feedback = "You're a bit over — no worries, stay consistent tomorrow.";
+            calorieFeedback = "You're a bit over — no worries, stay consistent tomorrow.";
 
-        feedbackLabel.Text = feedback;
+        feedbackLabel.Text = calorieFeedback;
         feedbackLabel.IsVisible = true;
+
+        // Water progress and feedback
+        waterProgress.Progress = Math.Min(totalWater / baseWater, 1);
+        waterTotalLabel.Text = $"Total: {totalWater} ml";
+
+        string waterFeedback;
+        if (totalWater < 1000)
+            waterFeedback = "Try to drink more water to stay hydrated.";
+        else if (totalWater < baseWater)
+            waterFeedback = "Great! Keep sipping to reach your goal.";
+        else
+            waterFeedback = "You've reached your water goal today. Well done!";
+
+        feedbackWaterLabel.Text = waterFeedback;
+        feedbackWaterLabel.IsVisible = true;
+
+ 
+    }
+
+    private void OnResetClicked(object sender, EventArgs e)
+    {
+        totalCalories = 0;
+        totalWater = 0;
+        UpdateStatus();
     }
 
     private void OnBackToHomeClicked(object sender, EventArgs e)

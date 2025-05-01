@@ -8,38 +8,111 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
-            <Label Text="Calorie &amp; Water Tracker"
-                   Style="{StaticResource PageTitleStyle}" />
+            <Label x:Name="dayLabel"
+                   Style="{StaticResource DayTitleStyle}" />
 
+
+            <Label Text="Enter Calories from Meal"
+                   TextColor="White"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,-5" />
+
+
+            <!-- Calorie Section -->
             <Entry x:Name="calorieEntry"
                    Placeholder="Enter meal calories (e.g. 500)"
                    Keyboard="Numeric"
                    Style="{StaticResource InputEntryStyle}" />
 
-            <Button Text="Add Calories"
-                    Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnAddCaloriesClicked" />
+            <ProgressBar x:Name="calorieProgress"
+                         HeightRequest="20"
+                         Progress="0"
+                         BackgroundColor="White"
+                         ProgressColor="#DAA520" />
 
-            <Entry x:Name="waterEntry"
-                   Placeholder="Water intake (ml)"
-                   Keyboard="Numeric"
-                   Style="{StaticResource InputEntryStyle}" />
-
-            <Button Text="Log Water"
-                    Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnLogWaterClicked" />
+            <Label x:Name="calorieTotalLabel"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   IsVisible="True" />
 
             <Label x:Name="recommendedLabel"
-                   Style="{StaticResource InfoTextStyle}"
-                   IsVisible="False" />
-
-            <Label x:Name="statusLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
             <Label x:Name="feedbackLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
+            
+            
+            
+            <Button Text="Add Calories"
+                    BackgroundColor="#DAA520"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="80"
+                    FontSize="20"
+                    Margin="0,10"
+                    Padding="10"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnAddCaloriesClicked" />
+
+
+            <!-- Water Section -->
+
+
+
+            <Label Text="Enter Water Intake (ml)"
+                   TextColor="White"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,-5" />
+
+            <Entry x:Name="waterEntry"
+                   Placeholder="Water intake (ml)"
+                   Keyboard="Numeric"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <ProgressBar x:Name="waterProgress"
+                         HeightRequest="20"
+                         Progress="0"
+                         BackgroundColor="White"
+                         ProgressColor="LightBlue" />
+
+            <Label x:Name="waterTotalLabel"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   IsVisible="True" />
+
+            <Label x:Name="recommendedWaterLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+            <Label x:Name="feedbackWaterLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+
+            <Button Text="Log Water"
+                    BackgroundColor="LightBlue"
+                    TextColor="Black"
+                    CornerRadius="15"
+                    HeightRequest="80"
+                    FontSize="20"
+                    Margin="0,10"
+                    Padding="10"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnLogWaterClicked" />
+
+
+            <Label x:Name="statusLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
 
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"

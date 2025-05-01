@@ -61,6 +61,18 @@
         </Style>
 
 
+        <!-- Day of the week title -->
+
+        <Style x:Key="DayTitleStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0,10,0,10" />
+        </Style>
+
+
+
 
     </Application.Resources>
 </Application>
