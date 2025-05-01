@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ImprovingPhysicalHealthApp.CaloriePage"
+             Title="Calorie Tracker"
+             Style="{StaticResource GreenPageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Calorie &amp; Water Tracker"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Input for meal calories -->
+            <Entry x:Name="calorieEntry"
+                   Placeholder="Enter meal calories (e.g. 500)"
+                   Keyboard="Numeric"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <Button Text="Add Calories"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnAddCaloriesClicked" />
+
+            <!-- Input for water intake -->
+            <Entry x:Name="waterEntry"
+                   Placeholder="Water intake (ml)"
+                   Keyboard="Numeric"
+                   Style="{StaticResource InputEntryStyle}" />
+
+            <Button Text="Log Water"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnLogWaterClicked" />
+
+            <!-- Recommended calorie info -->
+            <Label x:Name="recommendedLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+            <!-- Daily totals and progress -->
+            <Label x:Name="statusLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+            <!-- Friendly feedback -->
+            <Label x:Name="feedbackLabel"
+                   Style="{StaticResource InfoTextStyle}"
+                   IsVisible="False" />
+
+            <!-- Back to home -->
+            <Button Text="Back to Home"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnBackToHomeClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
