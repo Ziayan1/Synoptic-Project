@@ -29,7 +29,7 @@
                          HeightRequest="20"
                          Progress="0"
                          BackgroundColor="White"
-                         ProgressColor="#DAA520" />
+                         ProgressColor="#D9534F" />
 
             <Label x:Name="calorieTotalLabel"
                    FontSize="20"
@@ -49,7 +49,7 @@
             
             
             <Button Text="Add Calories"
-                    BackgroundColor="#DAA520"
+                    BackgroundColor="#D9534F"
                     TextColor="White"
                     CornerRadius="15"
                     HeightRequest="80"

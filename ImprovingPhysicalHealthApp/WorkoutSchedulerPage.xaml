@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ImprovingPhysicalHealthApp.WorkoutSchedulerPage"
+             Title="Workout Planner"
+             Style="{StaticResource GreenPageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Plan Your Workout Week"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Fitness Level Picker -->
+            <Label Text="Select your fitness level:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="fitnessPicker"
+                    Title="Choose level"
+                    TextColor="Black"
+                    BackgroundColor="White">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Beginner</x:String>
+                        <x:String>Intermediate</x:String>
+                        <x:String>Advanced</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Day Checkboxes -->
+            <Label Text="Choose your workout days:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <StackLayout x:Name="daysLayout"
+                         Padding="10"
+                         BackgroundColor="White"
+                         Spacing="10">
+                <!-- CheckBoxes will be added from code-behind -->
+            </StackLayout>
+
+            <!-- Suggestion -->
+            <Label x:Name="suggestionLabel"
+                   TextColor="White"
+                   FontSize="16"
+                   IsVisible="False" />
+
+            <!-- Summary -->
+            <Label x:Name="summaryLabel"
+                   TextColor="White"
+                   FontSize="16"
+                   FontAttributes="Italic"
+                   IsVisible="False" />
+
+            <!-- Buttons -->
+            <Button Text="Reset"
+                    BackgroundColor="#D9534F"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="80"
+                    FontSize="20"
+                    Margin="0,10"
+                    Padding="10"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnResetClicked" />
+
+
+            <Button Text="Save Workout Plan"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="80"
+                    FontSize="20"
+                    Margin="0,10"
+                    Padding="10"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnSaveClicked" />
+
+
+            <Button Text="Back to Home"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnBackToHomeClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

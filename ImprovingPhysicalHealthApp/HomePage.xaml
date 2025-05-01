@@ -19,9 +19,9 @@
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnCalorieClicked" />
 
-            <Button Text="Workout Plans"
+            <Button Text="Workout Scheduler"
                     Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnWorkoutClicked" />
+                    Clicked="OnWorkoutSchedulerClicked" />
 
             <Button Text="Diet Plans"
                     Style="{StaticResource CardButtonStyle}"
