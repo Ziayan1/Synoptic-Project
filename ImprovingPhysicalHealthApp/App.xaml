@@ -54,7 +54,6 @@
 
         <Style x:Key="InfoTextStyle" TargetType="Label">
             <Setter Property="FontSize" Value="18" />
-            <!-- was 16 -->
             <Setter Property="TextColor" Value="White" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="Margin" Value="0,10,0,0" />

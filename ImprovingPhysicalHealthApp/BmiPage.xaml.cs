@@ -65,4 +65,10 @@ public partial class BmiPage : ContentPage
             bmiAdviceLabel.IsVisible = true;
         }
     }
+
+    private void OnBackToHomeClicked(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new HomePage();
+    }
+
 }

@@ -52,6 +52,10 @@
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
+            <Button Text="Back to Home"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnBackToHomeClicked" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
