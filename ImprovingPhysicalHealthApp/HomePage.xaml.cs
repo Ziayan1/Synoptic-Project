@@ -23,6 +23,11 @@ public partial class HomePage : ContentPage
     private void OnWorkoutSchedulerClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new WorkoutSchedulerPage();
+
+    }
+    private void OnWorkoutsClicked(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new WorkoutsPage();
     }
 
     private void OnDietClicked(object sender, EventArgs e)

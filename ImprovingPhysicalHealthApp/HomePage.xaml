@@ -19,15 +19,18 @@
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnCalorieClicked" />
 
+            <Button Text="Diet Plans"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnDietClicked" />
+
+            <Button Text="Workouts"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnWorkoutsClicked" />
+
             <Button Text="Workout Scheduler"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnWorkoutSchedulerClicked" />
             
-            
-
-            <Button Text="Diet Plans"
-                    Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnDietClicked" />
 
             <Button Text="Logout"
                     BackgroundColor="#B22222"
