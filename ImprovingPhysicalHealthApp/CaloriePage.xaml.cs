@@ -25,6 +25,10 @@ public partial class CaloriePage : ContentPage
         if (double.TryParse(calorieEntry.Text, out double addedCalories))
         {
             totalCalories += addedCalories;
+
+            // Save to global user data
+            UserData.TotalCalories += addedCalories;
+
             calorieEntry.Text = string.Empty;
             UpdateStatus();
         }
@@ -35,6 +39,7 @@ public partial class CaloriePage : ContentPage
         if (double.TryParse(waterEntry.Text, out double addedWater))
         {
             totalWater += addedWater;
+
             waterEntry.Text = string.Empty;
             UpdateStatus();
         }
@@ -64,7 +69,7 @@ public partial class CaloriePage : ContentPage
     {
         double bmi = UserData.Bmi ?? 22;
 
-        // Calorie progress and feedback
+        // Calorie progress
         calorieProgress.Progress = Math.Min(totalCalories / baseCalorie, 1);
         calorieTotalLabel.Text = $"Total: {totalCalories} kcal";
 
@@ -81,7 +86,7 @@ public partial class CaloriePage : ContentPage
         feedbackLabel.Text = calorieFeedback;
         feedbackLabel.IsVisible = true;
 
-        // Water progress and feedback
+        // Water progress
         waterProgress.Progress = Math.Min(totalWater / baseWater, 1);
         waterTotalLabel.Text = $"Total: {totalWater} ml";
 
@@ -95,8 +100,6 @@ public partial class CaloriePage : ContentPage
 
         feedbackWaterLabel.Text = waterFeedback;
         feedbackWaterLabel.IsVisible = true;
-
- 
     }
 
     private void OnResetClicked(object sender, EventArgs e)

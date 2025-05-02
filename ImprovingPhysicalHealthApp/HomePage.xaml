@@ -22,6 +22,8 @@
             <Button Text="Workout Scheduler"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnWorkoutSchedulerClicked" />
+            
+            
 
             <Button Text="Diet Plans"
                     Style="{StaticResource CardButtonStyle}"

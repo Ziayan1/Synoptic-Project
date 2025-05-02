@@ -32,7 +32,7 @@
             <Setter Property="BackgroundColor" Value="#DAA520" />
             <Setter Property="TextColor" Value="White" />
             <Setter Property="CornerRadius" Value="15" />
-            <Setter Property="HeightRequest" Value="80" />
+            <Setter Property="HeightRequest" Value="70" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Margin" Value="0,10" />
             <Setter Property="Padding" Value="10" />

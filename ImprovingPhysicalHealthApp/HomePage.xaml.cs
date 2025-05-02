@@ -25,8 +25,13 @@ public partial class HomePage : ContentPage
         Application.Current.MainPage = new WorkoutSchedulerPage();
     }
 
+    private void OnDietClicked(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new DietPlanPage();
+    }
 
-    private void OnDietClicked(object sender, EventArgs e) { }
+
+   
 
     private void OnLogoutClicked(object sender, EventArgs e)
     {

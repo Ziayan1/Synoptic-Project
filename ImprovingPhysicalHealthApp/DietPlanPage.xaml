@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ImprovingPhysicalHealthApp.DietPlanPage"
+             Title="Diet Plan"
+             Style="{StaticResource GreenPageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Build Your Diet Plan"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Fitness Goal -->
+            <Label Text="Select your fitness goal:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="goalPicker"
+                    Title="Choose a goal"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    SelectedIndexChanged="OnGoalOrDietChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Lose Weight</x:String>
+                        <x:String>Maintain</x:String>
+                        <x:String>Build Muscle</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Dietary Preference -->
+            <Label Text="Select dietary preference:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="dietPicker"
+                    Title="Choose a diet type"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    SelectedIndexChanged="OnGoalOrDietChanged" />
+
+            <!-- Meal Pickers -->
+            <Label Text="Main Course:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="mainCoursePicker"
+                    Title="Select Main"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    IsEnabled="False" />
+
+            <Label Text="Side:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="sidePicker"
+                    Title="Select Side"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    IsEnabled="False" />
+
+            <Label Text="Drink:"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+            <Picker x:Name="drinkPicker"
+                    Title="Select Drink"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    IsEnabled="False" />
+
+            <!-- Meal Summary -->
+            <Label x:Name="suggestionsLabel"
+                   TextColor="White"
+                   FontAttributes="Italic"
+                   FontSize="16"
+                   IsVisible="False" />
+
+            <!-- Total Calorie Display -->
+            <Label x:Name="calorieTotalLabel"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="False" />
+
+            <!-- Buttons -->
+            <Button Text="Save Plan"
+                    Style="{StaticResource CardButtonStyle}"
+                    BackgroundColor="#4CAF50"
+                    Clicked="OnSaveClicked" />
+
+            <Button Text="Reset"
+                    Style="{StaticResource CardButtonStyle}"
+                    BackgroundColor="#D9534F"
+                    Clicked="OnResetClicked" />
+
+            <Button Text="Back to Home"
+                    Style="{StaticResource CardButtonStyle}"
+                    Clicked="OnBackToHomeClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
