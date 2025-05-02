@@ -1,4 +1,4 @@
-using Microsoft.Maui.Storage;
+﻿using Microsoft.Maui.Storage;
 
 namespace ImprovingPhysicalHealthApp;
 
@@ -27,7 +27,7 @@ public partial class DietPlanPage : ContentPage
 
     private void LoadFoodOptions()
     {
-        // ? Expanded & filtered food lists
+        // ✅ Expanded & filtered food lists
         mainCourses["Lose Weight"] = new List<string>
         {
             "Grilled Chicken - 350 kcal", "Tofu Bowl - 300 kcal", "Salmon Salad - 320 kcal",
@@ -133,7 +133,7 @@ public partial class DietPlanPage : ContentPage
         }).ToList();
     }
 
-    private void OnSaveClicked(object sender, EventArgs e)
+    private void OnAddToCaloriesClicked(object sender, EventArgs e)
     {
         if (string.IsNullOrEmpty(currentGoal) || string.IsNullOrEmpty(currentDiet))
         {
@@ -153,13 +153,19 @@ public partial class DietPlanPage : ContentPage
 
         int total = ExtractCalories(main) + ExtractCalories(side) + ExtractCalories(drink);
 
+        // ✅ Add to global intake so Calorie Page can access it
+        UserData.TotalCalories += total;
+
         suggestionsLabel.Text = $"Goal: {currentGoal}\nDiet: {currentDiet}\nMain: {main}\nSide: {side}\nDrink: {drink}";
         suggestionsLabel.IsVisible = true;
 
         string day = DateTime.Now.DayOfWeek.ToString();
         calorieTotalLabel.Text = $"Total Calories: {total} kcal\nMeal Plan for Today ({day})";
         calorieTotalLabel.IsVisible = true;
+
+        DisplayAlert("Added!", $"{total} kcal added to your calorie intake.", "OK");
     }
+
 
     private int ExtractCalories(string item)
     {
@@ -188,7 +194,7 @@ public partial class DietPlanPage : ContentPage
                 !string.IsNullOrEmpty(sidePicker.SelectedItem?.ToString()) ||
                 !string.IsNullOrEmpty(drinkPicker.SelectedItem?.ToString()))
             {
-                OnSaveClicked(null, null);
+                OnAddToCaloriesClicked(null, null);
             }
 
             mainCoursePicker.IsEnabled = true;

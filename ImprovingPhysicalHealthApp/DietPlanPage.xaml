@@ -83,10 +83,10 @@
                    IsVisible="False" />
 
             <!-- Buttons -->
-            <Button Text="Save Plan"
+            <Button Text="Add to Calorie Intake"
                     Style="{StaticResource CardButtonStyle}"
                     BackgroundColor="#4CAF50"
-                    Clicked="OnSaveClicked" />
+                    Clicked="OnAddToCaloriesClicked" />
 
             <Button Text="Reset"
                     Style="{StaticResource CardButtonStyle}"

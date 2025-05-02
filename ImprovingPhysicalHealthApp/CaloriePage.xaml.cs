@@ -14,6 +14,14 @@ public partial class CaloriePage : ContentPage
         ShowRecommendation();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Sync calories with global data in case values were added elsewhere
+        totalCalories = UserData.TotalCalories;
+        UpdateStatus();
+    }
+
     private void ShowDay()
     {
         var today = DateTime.Now.DayOfWeek;
@@ -25,8 +33,6 @@ public partial class CaloriePage : ContentPage
         if (double.TryParse(calorieEntry.Text, out double addedCalories))
         {
             totalCalories += addedCalories;
-
-            // Save to global user data
             UserData.TotalCalories += addedCalories;
 
             calorieEntry.Text = string.Empty;
@@ -39,7 +45,6 @@ public partial class CaloriePage : ContentPage
         if (double.TryParse(waterEntry.Text, out double addedWater))
         {
             totalWater += addedWater;
-
             waterEntry.Text = string.Empty;
             UpdateStatus();
         }
@@ -106,6 +111,7 @@ public partial class CaloriePage : ContentPage
     {
         totalCalories = 0;
         totalWater = 0;
+        UserData.TotalCalories = 0;
         UpdateStatus();
     }
 
