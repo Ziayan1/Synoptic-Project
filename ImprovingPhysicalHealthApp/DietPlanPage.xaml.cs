@@ -1,220 +1,170 @@
-﻿using Microsoft.Maui.Storage;
-
-namespace ImprovingPhysicalHealthApp;
+﻿namespace ImprovingPhysicalHealthApp;
 
 public partial class DietPlanPage : ContentPage
 {
-    private Dictionary<string, List<string>> mainCourses = new();
-    private Dictionary<string, List<string>> sides = new();
-    private Dictionary<string, List<string>> drinks = new();
-
-    private string currentGoal = "";
-    private string currentDiet = "";
-
     public DietPlanPage()
     {
         InitializeComponent();
-        LoadFoodOptions();
-        LoadSavedPreferences();
-        ShowDay();
+        LoadPickers();
     }
 
-    private void ShowDay()
+    private void LoadPickers()
     {
-        string day = DateTime.Now.DayOfWeek.ToString();
-        calorieTotalLabel.Text += $"\nMeal Plan for Today ({day})";
+        goalPicker.ItemsSource = new List<string> { "Weight Loss", "Weight Gain", "Maintain Weight" };
+        dietPicker.ItemsSource = new List<string> { "Halal", "Vegetarian", "Vegan", "None" };
+
+        goalPicker.SelectedIndexChanged += (s, e) => RefreshFoodPickers();
+        dietPicker.SelectedIndexChanged += (s, e) => RefreshFoodPickers();
     }
 
-    private void LoadFoodOptions()
+    private void RefreshFoodPickers()
     {
-        // ✅ Expanded & filtered food lists
-        mainCourses["Lose Weight"] = new List<string>
-        {
-            "Grilled Chicken - 350 kcal", "Tofu Bowl - 300 kcal", "Salmon Salad - 320 kcal",
-            "Lentil Stew - 290 kcal", "Vegetable Stir Fry - 270 kcal"
-        };
-
-        mainCourses["Maintain"] = new List<string>
-        {
-            "Chicken Wrap - 450 kcal", "Egg Fried Rice - 430 kcal", "Veggie Pasta - 400 kcal",
-            "Chickpea Curry - 410 kcal", "Paneer Bowl - 420 kcal"
-        };
-
-        mainCourses["Build Muscle"] = new List<string>
-        {
-            "Steak & Rice - 600 kcal", "Protein Burrito - 580 kcal", "Paneer Curry - 550 kcal",
-            "Black Bean Burger - 530 kcal", "Vegan Chili - 500 kcal"
-        };
-
-        sides["Lose Weight"] = new List<string>
-        {
-            "Steamed Veggies - 80 kcal", "Fruit Bowl - 90 kcal", "Side Salad - 100 kcal",
-            "Hummus & Carrot Sticks - 95 kcal"
-        };
-
-        sides["Maintain"] = new List<string>
-        {
-            "Roasted Veggies - 130 kcal", "Sweetcorn - 120 kcal", "Greek Yogurt - 140 kcal",
-            "Bruschetta - 150 kcal"
-        };
-
-        sides["Build Muscle"] = new List<string>
-        {
-            "Boiled Eggs - 160 kcal", "Cheesy Broccoli - 180 kcal", "Mashed Potatoes - 200 kcal",
-            "Mixed Nuts - 190 kcal"
-        };
-
-        drinks["Lose Weight"] = new List<string>
-        {
-            "Lemon Water - 10 kcal", "Green Tea - 0 kcal", "Fruit Smoothie - 120 kcal"
-        };
-
-        drinks["Maintain"] = new List<string>
-        {
-            "Lassi - 150 kcal", "Fresh Juice - 140 kcal", "Milkshake - 180 kcal"
-        };
-
-        drinks["Build Muscle"] = new List<string>
-        {
-            "Protein Shake - 220 kcal", "Banana Shake - 200 kcal", "Chocolate Milk - 230 kcal"
-        };
-
-        dietPicker.ItemsSource = new List<string> { "None", "Halal", "Vegetarian", "Vegan" };
-    }
-
-    private void OnGoalOrDietChanged(object sender, EventArgs e)
-    {
-        currentGoal = goalPicker.SelectedItem?.ToString() ?? "";
-        currentDiet = dietPicker.SelectedItem?.ToString() ?? "";
-
-        if (!string.IsNullOrEmpty(currentGoal) && !string.IsNullOrEmpty(currentDiet))
-        {
-            ApplyFoodFilter();
-            mainCoursePicker.IsEnabled = true;
-            sidePicker.IsEnabled = true;
-            drinkPicker.IsEnabled = true;
-        }
-        else
-        {
-            mainCoursePicker.IsEnabled = false;
-            sidePicker.IsEnabled = false;
-            drinkPicker.IsEnabled = false;
-        }
-    }
-
-    private void ApplyFoodFilter()
-    {
-        List<string> mains = mainCourses[currentGoal];
-        List<string> filteredMains = FilterByDiet(mains, currentDiet);
-        mainCoursePicker.ItemsSource = filteredMains;
-
-        List<string> sideList = sides[currentGoal];
-        List<string> filteredSides = FilterByDiet(sideList, currentDiet);
-        sidePicker.ItemsSource = filteredSides;
-
-        List<string> drinkList = drinks[currentGoal];
-        List<string> filteredDrinks = FilterByDiet(drinkList, currentDiet);
-        drinkPicker.ItemsSource = filteredDrinks;
-    }
-
-    private List<string> FilterByDiet(List<string> items, string diet)
-    {
-        return items.Where(item =>
-        {
-            string lower = item.ToLower();
-
-            if (diet == "Vegetarian")
-                return !(lower.Contains("chicken") || lower.Contains("steak") || lower.Contains("salmon"));
-
-            if (diet == "Vegan")
-                return !(lower.Contains("chicken") || lower.Contains("egg") || lower.Contains("paneer") || lower.Contains("steak") || lower.Contains("milk") || lower.Contains("yogurt") || lower.Contains("cheese") || lower.Contains("salmon") || lower.Contains("lassi"));
-
-            return true;
-        }).ToList();
-    }
-
-    private void OnAddToCaloriesClicked(object sender, EventArgs e)
-    {
-        if (string.IsNullOrEmpty(currentGoal) || string.IsNullOrEmpty(currentDiet))
-        {
-            DisplayAlert("Missing Info", "Please select both a goal and dietary preference.", "OK");
+        if (goalPicker.SelectedIndex == -1 || dietPicker.SelectedIndex == -1)
             return;
+
+        string goal = goalPicker.SelectedItem.ToString();
+        string diet = dietPicker.SelectedItem.ToString();
+
+        var mainOptions = new List<string>();
+        var sideOptions = new List<string>();
+        var drinkOptions = new List<string>();
+
+        // MAIN COURSES — 5+ per combo
+        if (goal == "Weight Loss")
+        {
+            if (diet == "Vegan" || diet == "None")
+            {
+                mainOptions.Add("Tofu Salad - 280 kcal");
+                mainOptions.Add("Chickpea Curry - 300 kcal");
+                mainOptions.Add("Grilled Veg Bowl - 290 kcal");
+                mainOptions.Add("Vegan Sushi - 310 kcal");
+                mainOptions.Add("Quinoa & Beans - 330 kcal");
+            }
+            if (diet == "Vegetarian" || diet == "None")
+            {
+                mainOptions.Add("Grilled Veg Wrap - 300 kcal");
+                mainOptions.Add("Paneer Tikka - 350 kcal");
+                mainOptions.Add("Zucchini Lasagna - 340 kcal");
+                mainOptions.Add("Greek Salad - 320 kcal");
+                mainOptions.Add("Eggplant Parmesan - 330 kcal");
+            }
+            if (diet == "Halal" || diet == "None")
+            {
+                mainOptions.Add("Grilled Chicken Breast - 350 kcal");
+                mainOptions.Add("Chicken Stir Fry - 360 kcal");
+                mainOptions.Add("Baked Fish - 370 kcal");
+                mainOptions.Add("Chicken & Veg Soup - 300 kcal");
+                mainOptions.Add("Turkey Salad - 340 kcal");
+            }
+        }
+        else if (goal == "Weight Gain")
+        {
+            if (diet == "Vegan" || diet == "None")
+            {
+                mainOptions.Add("Vegan Burrito - 600 kcal");
+                mainOptions.Add("Lentil Stew - 620 kcal");
+                mainOptions.Add("Stuffed Peppers - 590 kcal");
+                mainOptions.Add("Tempeh Curry - 610 kcal");
+                mainOptions.Add("Peanut Butter Bowl - 650 kcal");
+            }
+            if (diet == "Vegetarian" || diet == "None")
+            {
+                mainOptions.Add("Paneer Butter Masala - 620 kcal");
+                mainOptions.Add("Vegetable Lasagna - 600 kcal");
+                mainOptions.Add("Cheese Omelette - 580 kcal");
+                mainOptions.Add("Mushroom Alfredo - 630 kcal");
+                mainOptions.Add("Potato & Cheese Bake - 650 kcal");
+            }
+            if (diet == "Halal" || diet == "None")
+            {
+                mainOptions.Add("Chicken Biryani - 650 kcal");
+                mainOptions.Add("Lamb Kebab Roll - 670 kcal");
+                mainOptions.Add("Halal Beef Burger - 700 kcal");
+                mainOptions.Add("Butter Chicken - 690 kcal");
+                mainOptions.Add("Mutton Curry - 720 kcal");
+            }
+        }
+        else if (goal == "Maintain Weight")
+        {
+            if (diet == "Vegan" || diet == "None")
+            {
+                mainOptions.Add("Tofu Stir Fry - 350 kcal");
+                mainOptions.Add("Vegan Chili - 370 kcal");
+                mainOptions.Add("Grain Bowl - 380 kcal");
+                mainOptions.Add("Mixed Veg Rice - 390 kcal");
+                mainOptions.Add("Coconut Curry - 400 kcal");
+            }
+            if (diet == "Vegetarian" || diet == "None")
+            {
+                mainOptions.Add("Veggie Pasta - 420 kcal");
+                mainOptions.Add("Mushroom Stir Fry - 430 kcal");
+                mainOptions.Add("Spinach Paneer Wrap - 440 kcal");
+                mainOptions.Add("Egg Curry - 410 kcal");
+                mainOptions.Add("Cheese Noodles - 450 kcal");
+            }
+            if (diet == "Halal" || diet == "None")
+            {
+                mainOptions.Add("Chicken Wrap - 450 kcal");
+                mainOptions.Add("Halal Chicken Curry - 460 kcal");
+                mainOptions.Add("Grilled Chicken Kebab - 440 kcal");
+                mainOptions.Add("Tandoori Chicken - 470 kcal");
+                mainOptions.Add("Fish Cutlet - 430 kcal");
+            }
         }
 
-        string main = mainCoursePicker.SelectedItem?.ToString() ?? "";
-        string side = sidePicker.SelectedItem?.ToString() ?? "";
-        string drink = drinkPicker.SelectedItem?.ToString() ?? "";
+        // SIDES
+        sideOptions.Add("Fruit Salad - 150 kcal");
+        if (diet != "Vegan") sideOptions.Add("Yogurt Pot - 180 kcal");
+        if (diet == "Vegan" || diet == "Vegetarian" || diet == "None")
+            sideOptions.Add("Roasted Veggies - 120 kcal");
+        if (diet == "Vegetarian" || diet == "None")
+            sideOptions.Add("Hummus & Crackers - 160 kcal");
+        if (diet == "None" || diet == "Halal")
+            sideOptions.Add("Spicy Potato Wedges - 200 kcal");
 
-        Preferences.Set("DietGoal", currentGoal);
-        Preferences.Set("DietPreference", currentDiet);
-        Preferences.Set("SavedMain", main);
-        Preferences.Set("SavedSide", side);
-        Preferences.Set("SavedDrink", drink);
+        // DRINKS
+        drinkOptions.Add("Water - 0 kcal");
+        drinkOptions.Add("Green Tea - 5 kcal");
+        if (diet != "Vegan")
+        {
+            drinkOptions.Add("Milkshake - 200 kcal");
+            drinkOptions.Add("Low-Fat Milk - 100 kcal");
+        }
+        if (diet == "Vegan" || diet == "Vegetarian" || diet == "None")
+            drinkOptions.Add("Orange Juice - 100 kcal");
 
-        int total = ExtractCalories(main) + ExtractCalories(side) + ExtractCalories(drink);
-
-        // ✅ Add to global intake so Calorie Page can access it
-        UserData.TotalCalories += total;
-
-        suggestionsLabel.Text = $"Goal: {currentGoal}\nDiet: {currentDiet}\nMain: {main}\nSide: {side}\nDrink: {drink}";
-        suggestionsLabel.IsVisible = true;
-
-        string day = DateTime.Now.DayOfWeek.ToString();
-        calorieTotalLabel.Text = $"Total Calories: {total} kcal\nMeal Plan for Today ({day})";
-        calorieTotalLabel.IsVisible = true;
-
-        DisplayAlert("Added!", $"{total} kcal added to your calorie intake.", "OK");
+        // Apply to Pickers
+        mainCoursePicker.ItemsSource = mainOptions;
+        sidePicker.ItemsSource = sideOptions;
+        drinkPicker.ItemsSource = drinkOptions;
     }
-
 
     private int ExtractCalories(string item)
     {
-        if (string.IsNullOrEmpty(item)) return 0;
-
         var match = System.Text.RegularExpressions.Regex.Match(item, @"(\d+)\s*kcal");
         return match.Success ? int.Parse(match.Groups[1].Value) : 0;
     }
 
-    private void LoadSavedPreferences()
+    private void OnAddToCaloriesClicked(object sender, EventArgs e)
     {
-        currentGoal = Preferences.Get("DietGoal", "");
-        currentDiet = Preferences.Get("DietPreference", "");
+        string main = mainCoursePicker.SelectedItem?.ToString() ?? "";
+        string side = sidePicker.SelectedItem?.ToString() ?? "";
+        string drink = drinkPicker.SelectedItem?.ToString() ?? "";
 
-        goalPicker.SelectedItem = currentGoal;
-        dietPicker.SelectedItem = currentDiet;
+        int total = ExtractCalories(main) + ExtractCalories(side) + ExtractCalories(drink);
+        UserData.TotalCalories += total;
 
-        if (!string.IsNullOrEmpty(currentGoal) && !string.IsNullOrEmpty(currentDiet))
-        {
-            ApplyFoodFilter();
-            mainCoursePicker.SelectedItem = Preferences.Get("SavedMain", "");
-            sidePicker.SelectedItem = Preferences.Get("SavedSide", "");
-            drinkPicker.SelectedItem = Preferences.Get("SavedDrink", "");
+        string day = DateTime.Now.DayOfWeek.ToString();
+        string goal = goalPicker.SelectedItem?.ToString() ?? "N/A";
+        string diet = dietPicker.SelectedItem?.ToString() ?? "N/A";
 
-            if (!string.IsNullOrEmpty(mainCoursePicker.SelectedItem?.ToString()) ||
-                !string.IsNullOrEmpty(sidePicker.SelectedItem?.ToString()) ||
-                !string.IsNullOrEmpty(drinkPicker.SelectedItem?.ToString()))
-            {
-                OnAddToCaloriesClicked(null, null);
-            }
+        suggestionsLabel.Text = $"Meal Plan for {day}\nGoal: {goal}\nDiet: {diet}\nMain: {main}\nSide: {side}\nDrink: {drink}";
+        suggestionsLabel.IsVisible = true;
 
-            mainCoursePicker.IsEnabled = true;
-            sidePicker.IsEnabled = true;
-            drinkPicker.IsEnabled = true;
-        }
-    }
+        calorieTotalLabel.Text = $"Total Calories: {total} kcal";
+        calorieTotalLabel.IsVisible = true;
 
-    private void OnResetClicked(object sender, EventArgs e)
-    {
-        goalPicker.SelectedIndex = -1;
-        dietPicker.SelectedIndex = -1;
-        mainCoursePicker.ItemsSource = null;
-        sidePicker.ItemsSource = null;
-        drinkPicker.ItemsSource = null;
-
-        suggestionsLabel.IsVisible = false;
-        calorieTotalLabel.IsVisible = false;
-
-        Preferences.Clear();
+        DisplayAlert("Meal Added", $"{total} kcal added to your calorie tracker.", "OK");
     }
 
     private void OnBackToHomeClicked(object sender, EventArgs e)
