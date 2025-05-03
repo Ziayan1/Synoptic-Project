@@ -2,34 +2,73 @@
 
 public partial class DietPlanPage : ContentPage
 {
+    private List<string> mealHistory = new List<string>();
+    private string goal = "";
+
     public DietPlanPage()
     {
         InitializeComponent();
+
+        if (UserData.Bmi == null)
+        {
+            DisplayAlert("BMI Required", "Please complete the BMI calculator first.", "OK");
+            Application.Current.MainPage = new HomePage();
+            return;
+        }
+
+        SetGoalFromBmi();
         LoadPickers();
+        LoadMealHistory();
+    }
+
+    private void SetGoalFromBmi()
+    {
+        double bmi = UserData.Bmi ?? 22;
+
+        if (bmi < 18.5)
+            goal = "Weight Gain";
+        else if (bmi > 25)
+            goal = "Weight Loss";
+        else
+            goal = "Maintain Weight";
+
+        goalLabel.Text = $"Goal: {goal}";
     }
 
     private void LoadPickers()
     {
-        goalPicker.ItemsSource = new List<string> { "Weight Loss", "Weight Gain", "Maintain Weight" };
         dietPicker.ItemsSource = new List<string> { "Halal", "Vegetarian", "Vegan", "None" };
-
-        goalPicker.SelectedIndexChanged += (s, e) => RefreshFoodPickers();
         dietPicker.SelectedIndexChanged += (s, e) => RefreshFoodPickers();
+    }
+
+    private void LoadMealHistory()
+    {
+        string stored = Preferences.Get("MealHistory", "");
+        if (!string.IsNullOrEmpty(stored))
+        {
+            mealHistory = stored.Split("||").ToList();
+            mealHistoryLabel.Text = "Meal History:\n" + string.Join("\n", mealHistory.TakeLast(3));
+            mealHistoryLabel.IsVisible = true;
+        }
+    }
+
+    private void SaveMealHistory()
+    {
+        Preferences.Set("MealHistory", string.Join("||", mealHistory));
     }
 
     private void RefreshFoodPickers()
     {
-        if (goalPicker.SelectedIndex == -1 || dietPicker.SelectedIndex == -1)
+        if (dietPicker.SelectedIndex == -1)
             return;
 
-        string goal = goalPicker.SelectedItem.ToString();
         string diet = dietPicker.SelectedItem.ToString();
 
         var mainOptions = new List<string>();
         var sideOptions = new List<string>();
         var drinkOptions = new List<string>();
 
-        // MAIN COURSES — 5+ per combo
+        // Main courses by goal + dietary
         if (goal == "Weight Loss")
         {
             if (diet == "Vegan" || diet == "None")
@@ -133,7 +172,6 @@ public partial class DietPlanPage : ContentPage
         if (diet == "Vegan" || diet == "Vegetarian" || diet == "None")
             drinkOptions.Add("Orange Juice - 100 kcal");
 
-        // Apply to Pickers
         mainCoursePicker.ItemsSource = mainOptions;
         sidePicker.ItemsSource = sideOptions;
         drinkPicker.ItemsSource = drinkOptions;
@@ -155,7 +193,6 @@ public partial class DietPlanPage : ContentPage
         UserData.TotalCalories += total;
 
         string day = DateTime.Now.DayOfWeek.ToString();
-        string goal = goalPicker.SelectedItem?.ToString() ?? "N/A";
         string diet = dietPicker.SelectedItem?.ToString() ?? "N/A";
 
         suggestionsLabel.Text = $"Meal Plan for {day}\nGoal: {goal}\nDiet: {diet}\nMain: {main}\nSide: {side}\nDrink: {drink}";
@@ -163,6 +200,13 @@ public partial class DietPlanPage : ContentPage
 
         calorieTotalLabel.Text = $"Total Calories: {total} kcal";
         calorieTotalLabel.IsVisible = true;
+
+        string historyEntry = $"{DateTime.Now:MMM dd} - {main}, {side}, {drink} ({total} kcal)";
+        mealHistory.Add(historyEntry);
+        SaveMealHistory();
+
+        mealHistoryLabel.Text = "Meal History:\n" + string.Join("\n", mealHistory.TakeLast(3));
+        mealHistoryLabel.IsVisible = true;
 
         DisplayAlert("Meal Added", $"{total} kcal added to your calorie tracker.", "OK");
     }

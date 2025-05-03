@@ -8,52 +8,76 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
-            <Label Text="Create Your Meal Plan"
-                   Style="{StaticResource PageTitleStyle}" />
-
-            <Label Text="Select Goal:" TextColor="White" />
-            <Picker x:Name="goalPicker"
-                    Title="Choose Goal"
-                    Style="{StaticResource InputEntryStyle}" />
-
-            <Label Text="Special Dietary Requirement:" TextColor="White" />
-            <Picker x:Name="dietPicker"
-                    Title="Choose Diet"
-                    Style="{StaticResource InputEntryStyle}" />
-
-            <Label Text="Main Course:" TextColor="White" />
-            <Picker x:Name="mainCoursePicker"
-                    Title="Main Course"
-                    Style="{StaticResource InputEntryStyle}" />
-
-            <Label Text="Side Dish:" TextColor="White" />
-            <Picker x:Name="sidePicker"
-                    Title="Side Dish"
-                    Style="{StaticResource InputEntryStyle}" />
-
-            <Label Text="Drink:" TextColor="White" />
-            <Picker x:Name="drinkPicker"
-                    Title="Drink"
-                    Style="{StaticResource InputEntryStyle}" />
-
-            <Label x:Name="suggestionsLabel"
-                   TextColor="White"
-                   FontSize="16"
-                   IsVisible="False" />
-
-            <Label x:Name="calorieTotalLabel"
-                   TextColor="White"
-                   FontSize="20"
+            <!-- Automatically calculated goal -->
+            <Label x:Name="goalLabel"
+                   Text="Your Goal: "
                    FontAttributes="Bold"
+                   FontSize="24"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <!-- Dietary requirement picker -->
+            <Label Text="Special Dietary Requirement:"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+            <Picker x:Name="dietPicker"
+                    Title="Select dietary requirement"
+                    Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Main course picker -->
+            <Label Text="Select Main Course:"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+            <Picker x:Name="mainCoursePicker"
+                    Title="Choose main course"
+                    Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Side picker -->
+            <Label Text="Select Side:"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+            <Picker x:Name="sidePicker"
+                    Title="Choose side"
+                    Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Drink picker -->
+            <Label Text="Select Drink:"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+            <Picker x:Name="drinkPicker"
+                    Title="Choose drink"
+                    Style="{StaticResource InputEntryStyle}" />
+
+            <!-- Add to Calorie Intake -->
+            <Button Text="Add to Calorie Intake"
+                    Clicked="OnAddToCaloriesClicked"
+                    Style="{StaticResource CardButtonStyle}" />
+
+            <!-- Total Calories Label -->
+            <Label x:Name="calorieTotalLabel"
+                   FontSize="18"
+                   TextColor="White"
                    IsVisible="False" />
 
-            <Button Text="Add to Calorie Intake"
-                    Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnAddToCaloriesClicked" />
+            <!-- Meal Plan Summary -->
+            <Label x:Name="suggestionsLabel"
+                   FontSize="16"
+                   TextColor="White"
+                   LineBreakMode="WordWrap"
+                   IsVisible="False" />
 
+            <!-- Meal History -->
+            <Label x:Name="mealHistoryLabel"
+                   FontSize="14"
+                   TextColor="White"
+                   LineBreakMode="WordWrap"
+                   IsVisible="False" />
+
+            <!-- Back to Home -->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -12,7 +12,7 @@
             <Label Text="Improving Physical Health"
                    Style="{StaticResource PageTitleStyle}" />
 
-            <!-- Username input -->
+            <!-- Username inpust -->
             <Entry x:Name="usernameEntry"
                    Placeholder="Username"
                    Style="{StaticResource InputEntryStyle}" />

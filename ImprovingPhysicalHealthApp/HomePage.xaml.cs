@@ -20,7 +20,7 @@ public partial class HomePage : ContentPage
 
         Application.Current.MainPage = new CaloriePage();
     }
-    private void OnWorkoutSchedulerClicked(object sender, EventArgs e)
+    private void OnWorkoutClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new WorkoutSchedulerPage();
 
@@ -29,11 +29,17 @@ public partial class HomePage : ContentPage
     {
         Application.Current.MainPage = new WorkoutsPage();
     }
-
-    private void OnDietClicked(object sender, EventArgs e)
+    private async void OnDietClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new DietPlanPage();
+        if (UserData.Bmi == null)
+        {
+            await DisplayAlert("BMI Required", "Please complete your BMI check first.", "OK");
+            return;
+        }
+
+        await Navigation.PushAsync(new DietPlanPage());
     }
+
 
 
    
