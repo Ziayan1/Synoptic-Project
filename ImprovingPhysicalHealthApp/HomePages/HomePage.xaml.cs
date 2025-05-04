@@ -46,7 +46,7 @@ public partial class HomePage : ContentPage
             return;
         }
 
-        await Navigation.PushAsync(new DietPlanPage());
+        Application.Current.MainPage = new DietPlanPage();
     }
 
     // logs user out 

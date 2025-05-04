@@ -23,7 +23,7 @@ namespace ImprovingPhysicalHealthApp
             builder.Logging.AddDebug();
 #endif
 
-            return builder.Build(); // finish and return app
+            return builder.Build(); //  return app
         }
     }
 }
