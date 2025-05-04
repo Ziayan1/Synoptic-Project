@@ -8,30 +8,36 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
+       
             <Label Text="Welcome Back!"
                    Style="{StaticResource PageTitleStyle}" />
 
+            <!-- Button BMI calculator -->
             <Button Text="BMI Calculator"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBmiClicked" />
 
+            <!-- Button calorie tracker -->
             <Button Text="Calorie Calculator"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnCalorieClicked" />
 
+            <!-- Button diet plans -->
             <Button Text="Diet Plans"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnDietClicked" />
 
+            <!-- Button  workouts page -->
             <Button Text="Workouts"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnWorkoutsClicked" />
 
+            <!-- Button workout scheduler -->
             <Button Text="Workout Scheduler"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnWorkoutClicked" />
-            
 
+            <!-- Logout button -->
             <Button Text="Logout"
                     BackgroundColor="#B22222"
                     TextColor="White"

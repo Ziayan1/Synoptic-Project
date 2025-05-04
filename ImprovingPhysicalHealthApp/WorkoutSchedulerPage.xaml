@@ -11,7 +11,7 @@
             <Label Text="Plan Your Workout Week"
                    Style="{StaticResource PageTitleStyle}" />
 
-            <!-- Fitness Level Picker -->
+            <!-- Fitness level dropdown menu -->
             <Label Text="Select your fitness level:"
                    TextColor="White"
                    FontAttributes="Bold" />
@@ -28,7 +28,7 @@
                 </Picker.ItemsSource>
             </Picker>
 
-            <!-- Day Checkboxes -->
+            <!-- Workout days -->
             <Label Text="Choose your workout days:"
                    TextColor="White"
                    FontAttributes="Bold" />
@@ -36,23 +36,23 @@
                          Padding="10"
                          BackgroundColor="White"
                          Spacing="10">
-                <!-- CheckBoxes will be added from code-behind -->
+                
             </StackLayout>
 
-            <!-- Suggestion -->
+            <!-- suggestion depends on fitness level -->
             <Label x:Name="suggestionLabel"
                    TextColor="White"
                    FontSize="16"
                    IsVisible="False" />
 
-            <!-- Summary -->
+            <!-- Summary label -->
             <Label x:Name="summaryLabel"
                    TextColor="White"
                    FontSize="16"
                    FontAttributes="Italic"
                    IsVisible="False" />
 
-            <!-- Buttons -->
+            <!-- Reset workout days -->
             <Button Text="Reset"
                     BackgroundColor="#D9534F"
                     TextColor="White"
@@ -64,7 +64,7 @@
                     HorizontalOptions="FillAndExpand"
                     Clicked="OnResetClicked" />
 
-
+            <!-- Save plan -->
             <Button Text="Save Workout Plan"
                     BackgroundColor="#4CAF50"
                     TextColor="White"
@@ -76,7 +76,7 @@
                     HorizontalOptions="FillAndExpand"
                     Clicked="OnSaveClicked" />
 
-
+            <!-- Return Home-->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />

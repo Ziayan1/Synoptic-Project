@@ -8,7 +8,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
-            <!-- Automatically calculated goal -->
+            <!-- User goal is based on BMI -->
             <Label x:Name="goalLabel"
                    Text="Your Goal: "
                    FontAttributes="Bold"
@@ -16,7 +16,7 @@
                    TextColor="White"
                    HorizontalOptions="Center" />
 
-            <!-- Dietary requirement picker -->
+            <!-- Dietary preference -->
             <Label Text="Special Dietary Requirement:"
                    FontAttributes="Bold"
                    TextColor="White" />
@@ -24,7 +24,7 @@
                     Title="Select dietary requirement"
                     Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Main course picker -->
+            <!-- main course options -->
             <Label Text="Select Main Course:"
                    FontAttributes="Bold"
                    TextColor="White" />
@@ -32,7 +32,7 @@
                     Title="Choose main course"
                     Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Side picker -->
+            <!-- side options -->
             <Label Text="Select Side:"
                    FontAttributes="Bold"
                    TextColor="White" />
@@ -40,7 +40,7 @@
                     Title="Choose side"
                     Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Drink picker -->
+            <!-- drink options -->
             <Label Text="Select Drink:"
                    FontAttributes="Bold"
                    TextColor="White" />
@@ -48,32 +48,32 @@
                     Title="Choose drink"
                     Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Add to Calorie Intake -->
+            <!-- add meal to calories -->
             <Button Text="Add to Calorie Intake"
                     Clicked="OnAddToCaloriesClicked"
                     Style="{StaticResource CardButtonStyle}" />
 
-            <!-- Total Calories Label -->
+            <!-- total calories meal -->
             <Label x:Name="calorieTotalLabel"
                    FontSize="18"
                    TextColor="White"
                    IsVisible="False" />
 
-            <!-- Meal Plan Summary -->
+            <!-- selected meals -->
             <Label x:Name="suggestionsLabel"
                    FontSize="16"
                    TextColor="White"
                    LineBreakMode="WordWrap"
                    IsVisible="False" />
 
-            <!-- Meal History -->
+            <!-- meal history -->
             <Label x:Name="mealHistoryLabel"
                    FontSize="14"
                    TextColor="White"
                    LineBreakMode="WordWrap"
                    IsVisible="False" />
 
-            <!-- Back to Home -->
+            <!-- Return to home -->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />

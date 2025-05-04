@@ -8,20 +8,23 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
-            <!-- Display the user's goal based on BMI -->
+            <!-- Shows user goal depending on bmi -->
             <Label x:Name="goalLabel"
                    FontSize="20"
                    FontAttributes="Bold"
                    TextColor="White"
                    Margin="0,0,0,10" />
 
+            <!-- user pick fitness level -->
             <Label Text="Select Fitness Level:"
                    Style="{StaticResource LabelStyle}" />
 
+            <!--  fitness levels -->
             <Picker x:Name="fitnessPicker"
                     Title="Choose Fitness Level"
                     Style="{StaticResource InputEntryStyle}" />
 
+            <!-- suggested workouts -->
             <Label x:Name="suggestionTitle"
                    Text="Suggested Workouts:"
                    FontSize="20"
@@ -29,9 +32,11 @@
                    TextColor="White"
                    IsVisible="False" />
 
+            <!-- Workout suggestions -->
             <StackLayout x:Name="workoutList"
                          Spacing="10" />
 
+            <!-- Return to home-->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />

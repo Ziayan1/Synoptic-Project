@@ -5,19 +5,19 @@
              Title="Login"
              Style="{StaticResource GreenPageStyle}">
 
-
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
 
+            <!-- App name -->
             <Label Text="Improving Physical Health"
                    Style="{StaticResource PageTitleStyle}" />
 
-            <!-- Username inpust -->
+            <!-- Username -->
             <Entry x:Name="usernameEntry"
                    Placeholder="Username"
                    Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Password input -->
+            <!-- Password -->
             <Entry x:Name="passwordEntry"
                    Placeholder="Password"
                    IsPassword="True"
@@ -26,13 +26,12 @@
             <!-- Login button -->
             <Button Text="Login"
                     Clicked="OnLoginClicked"
-                    Style="{StaticResource PrimaryButtonStyle}" />
+                    Style="{StaticResource CardButtonStyle}" />
 
-            <!-- Message for login feedback -->
+            <!-- validation if login fails -->
             <Label x:Name="messageLabel"
                    Style="{StaticResource ErrorMessageStyle}"
                    IsVisible="False" />
-                   
 
         </VerticalStackLayout>
     </ScrollView>

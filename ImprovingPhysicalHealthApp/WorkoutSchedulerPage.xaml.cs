@@ -4,25 +4,26 @@ namespace ImprovingPhysicalHealthApp;
 
 public partial class WorkoutSchedulerPage : ContentPage
 {
+    //  day checkboxes
     private readonly List<CheckBox> dayCheckboxes = new();
-    private readonly string[] daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+   
+    private readonly string[] daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]; // Days of the week
 
     public WorkoutSchedulerPage()
     {
         InitializeComponent();
-        BuildDayCheckboxes();
-        fitnessPicker.SelectedIndexChanged += OnFitnessLevelChanged;
-        RestoreSelections();
+        BuildDayCheckboxes(); // Creates checkboxes for each day
+        fitnessPicker.SelectedIndexChanged += OnFitnessLevelChanged; 
+        RestoreSelections(); 
     }
 
+    // Makes the checkboxes for each day
     private void BuildDayCheckboxes()
     {
         foreach (string day in daysOfWeek)
         {
-            var cb = new CheckBox
-            {
-                Color = Colors.DarkGreen
-            };
+            var cb = new CheckBox { Color = Colors.DarkGreen };
 
             var label = new Label
             {
@@ -39,16 +40,18 @@ public partial class WorkoutSchedulerPage : ContentPage
             };
 
             dayCheckboxes.Add(cb);
-            daysLayout.Children.Add(row);
+            daysLayout.Children.Add(row); // Add to the pag 
         }
     }
 
+    // Runs when fitness level is picked
     private void OnFitnessLevelChanged(object sender, EventArgs e)
     {
-        ShowSmartSuggestion();
-        UpdateSummary();
+        ShowSmartSuggestion(); // shows suggestions
+        UpdateSummary(); // Shows summary
     }
 
+    //  shows  suggestion depending on bmi level and and fitness 
     private void ShowSmartSuggestion()
     {
         string level = fitnessPicker.SelectedItem?.ToString();
@@ -109,6 +112,7 @@ public partial class WorkoutSchedulerPage : ContentPage
         suggestionLabel.IsVisible = true;
     }
 
+    // This shows the options the user selected
     private void UpdateSummary()
     {
         var selectedDays = GetSelectedDayNames();
@@ -126,6 +130,7 @@ public partial class WorkoutSchedulerPage : ContentPage
         summaryLabel.IsVisible = true;
     }
 
+    // looks for which days user picked
     private List<string> GetSelectedDayNames()
     {
         var selectedDays = new List<string>();
@@ -142,19 +147,22 @@ public partial class WorkoutSchedulerPage : ContentPage
         return selectedDays;
     }
 
+    // Rest when button is pressed
     private void OnResetClicked(object sender, EventArgs e)
     {
         foreach (var cb in dayCheckboxes)
             cb.IsChecked = false;
 
         fitnessPicker.SelectedIndex = -1;
-        Preferences.Remove("WorkoutDays");
+
+        Preferences.Remove("WorkoutDays"); // Clears saved data
         Preferences.Remove("FitnessLevel");
 
         suggestionLabel.IsVisible = false;
         summaryLabel.IsVisible = false;
     }
 
+    // saves data when save is clicked
     private void OnSaveClicked(object sender, EventArgs e)
     {
         var selectedDays = GetSelectedDayNames();
@@ -166,6 +174,7 @@ public partial class WorkoutSchedulerPage : ContentPage
         DisplayAlert("Saved", "Your workout plan has been saved.", "OK");
     }
 
+    // loads the saved data
     private void RestoreSelections()
     {
         string level = Preferences.Get("FitnessLevel", "");
@@ -194,6 +203,7 @@ public partial class WorkoutSchedulerPage : ContentPage
         }
     }
 
+    // return to home page
     private void OnBackToHomeClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new HomePage();
