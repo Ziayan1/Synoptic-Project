@@ -8,10 +8,11 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
+            <!-- Title -->
             <Label Text="BMI Calculator"
                    Style="{StaticResource PageTitleStyle}" />
 
-            <!-- Gender picker -->
+            <!-- pick gender -->
             <Picker x:Name="genderPicker"
                     Title="Select your gender"
                     TextColor="Black"
@@ -24,23 +25,24 @@
                 </Picker.ItemsSource>
             </Picker>
 
-            <!-- Input fields -->
+            <!-- height -->
             <Entry x:Name="heightEntry"
                    Placeholder="Enter height in meters (e.g. 1.75)"
                    Keyboard="Numeric"
                    Style="{StaticResource InputEntryStyle}" />
 
+            <!--  weight -->
             <Entry x:Name="weightEntry"
                    Placeholder="Enter weight in kg"
                    Keyboard="Numeric"
                    Style="{StaticResource InputEntryStyle}" />
 
-            <!-- Button -->
+            <!-- calculate BMI -->
             <Button Text="Calculate BMI"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnCalculateBmiClicked" />
 
-            <!-- Result display -->
+            <!--  BMI result-->
             <Label x:Name="bmiValueLabel"
                    FontSize="36"
                    FontAttributes="Bold"
@@ -48,10 +50,12 @@
                    HorizontalOptions="Center"
                    IsVisible="False" />
 
+            <!-- advice based on BMI -->
             <Label x:Name="bmiAdviceLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
+            <!-- Back button -->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />

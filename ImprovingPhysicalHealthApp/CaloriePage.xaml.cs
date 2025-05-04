@@ -10,16 +10,16 @@ public partial class CaloriePage : ContentPage
     public CaloriePage()
     {
         InitializeComponent();
-        ShowDay();
-        ShowRecommendation();
+        ShowDay(); // show the day
+        ShowRecommendation(); // show reccomended intake
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        // Sync calories with global data in case values were added elsewhere
+        // get calories from other pages
         totalCalories = UserData.TotalCalories;
-        UpdateStatus();
+        UpdateStatus(); // update progress bar and the label
     }
 
     private void ShowDay()
@@ -30,23 +30,25 @@ public partial class CaloriePage : ContentPage
 
     private void OnAddCaloriesClicked(object sender, EventArgs e)
     {
+        // check input is a number for validation
         if (double.TryParse(calorieEntry.Text, out double addedCalories))
         {
             totalCalories += addedCalories;
-            UserData.TotalCalories += addedCalories;
+            UserData.TotalCalories += addedCalories; // save data globally
 
-            calorieEntry.Text = string.Empty;
-            UpdateStatus();
+            calorieEntry.Text = ""; // reset box
+            UpdateStatus(); // refresh the progress
         }
     }
 
     private void OnLogWaterClicked(object sender, EventArgs e)
     {
+        // Check if number for validation
         if (double.TryParse(waterEntry.Text, out double addedWater))
         {
             totalWater += addedWater;
-            waterEntry.Text = string.Empty;
-            UpdateStatus();
+            waterEntry.Text = "";       // reset box
+            UpdateStatus();  // refresh the progress
         }
     }
 
@@ -55,9 +57,11 @@ public partial class CaloriePage : ContentPage
         double bmi = UserData.Bmi ?? 22;
         string gender = UserData.Gender ?? "Male";
 
+        // Different data for male
         baseCalorie = gender == "Male" ? 2200 : 1900;
         baseWater = 2000;
 
+        // Change depending on BMI
         if (bmi < 18.5)
             baseCalorie += 200;
         else if (bmi > 30)
@@ -74,27 +78,29 @@ public partial class CaloriePage : ContentPage
     {
         double bmi = UserData.Bmi ?? 22;
 
-        // Calorie progress
+        // UPDATE calorie progress bar and the label
         calorieProgress.Progress = Math.Min(totalCalories / baseCalorie, 1);
         calorieTotalLabel.Text = $"Total: {totalCalories} kcal";
 
+        // Feedback messages 
         string calorieFeedback;
         if (bmi > 30 && totalCalories > baseCalorie)
-            calorieFeedback = "You're above your intake and BMI is high — try reducing calories gradually.";
+            calorieFeedback = "You are above limit for your calorie intake — Please try to reduce calories gradually.";
         else if (totalCalories < 1200)
-            calorieFeedback = "You're under your intake. A light meal or snack could help.";
+            calorieFeedback = "You are below your calorie intake. Some light meal or snack will help.";
         else if (totalCalories <= baseCalorie)
-            calorieFeedback = "You're doing well. Keep it balanced!";
+            calorieFeedback = "You are doing really well. Keep it going!";
         else
-            calorieFeedback = "You're a bit over — no worries, stay consistent tomorrow.";
+            calorieFeedback = "You are over the limit — Don't worry, tommorow is a fresh start!";
 
         feedbackLabel.Text = calorieFeedback;
         feedbackLabel.IsVisible = true;
 
-        // Water progress
+        // update water bar and label
         waterProgress.Progress = Math.Min(totalWater / baseWater, 1);
         waterTotalLabel.Text = $"Total: {totalWater} ml";
 
+        // feedback water
         string waterFeedback;
         if (totalWater < 1000)
             waterFeedback = "Try to drink more water to stay hydrated.";
@@ -109,6 +115,7 @@ public partial class CaloriePage : ContentPage
 
     private void OnResetClicked(object sender, EventArgs e)
     {
+        // reset all values
         totalCalories = 0;
         totalWater = 0;
         UserData.TotalCalories = 0;
@@ -117,6 +124,7 @@ public partial class CaloriePage : ContentPage
 
     private void OnBackToHomeClicked(object sender, EventArgs e)
     {
+        // Return home
         Application.Current.MainPage = new HomePage();
     }
 }

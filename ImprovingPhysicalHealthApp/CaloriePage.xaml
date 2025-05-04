@@ -8,29 +8,31 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
+            <!-- shows the day of the week -->
             <Label x:Name="dayLabel"
                    Style="{StaticResource DayTitleStyle}" />
 
-
+            <!-- calorie input -->
             <Label Text="Enter Calories from Meal"
                    TextColor="White"
                    FontSize="18"
                    FontAttributes="Bold"
                    Margin="0,0,0,-5" />
 
-
-            <!-- Calorie Section -->
+            <!--calories input-->
             <Entry x:Name="calorieEntry"
                    Placeholder="Enter meal calories (e.g. 500)"
                    Keyboard="Numeric"
                    Style="{StaticResource InputEntryStyle}" />
 
+            <!-- progress bar - calories -->
             <ProgressBar x:Name="calorieProgress"
                          HeightRequest="20"
                          Progress="0"
                          BackgroundColor="White"
                          ProgressColor="#D9534F" />
 
+            <!-- total calorie result -->
             <Label x:Name="calorieTotalLabel"
                    FontSize="20"
                    FontAttributes="Bold"
@@ -38,16 +40,17 @@
                    HorizontalOptions="Center"
                    IsVisible="True" />
 
+            <!-- recommended intake -->
             <Label x:Name="recommendedLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
+            <!-- calorie feedback -->
             <Label x:Name="feedbackLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
-            
-            
-            
+
+            <!-- add calorie -->
             <Button Text="Add Calories"
                     BackgroundColor="#D9534F"
                     TextColor="White"
@@ -60,27 +63,27 @@
                     Clicked="OnAddCaloriesClicked" />
 
 
-            <!-- Water Section -->
-
-
-
+            <!-- water title -->
             <Label Text="Enter Water Intake (ml)"
                    TextColor="White"
                    FontSize="18"
                    FontAttributes="Bold"
                    Margin="0,20,0,-5" />
 
+            <!-- input water amount -->
             <Entry x:Name="waterEntry"
                    Placeholder="Water intake (ml)"
                    Keyboard="Numeric"
                    Style="{StaticResource InputEntryStyle}" />
 
+            <!-- progress bar - water  -->
             <ProgressBar x:Name="waterProgress"
                          HeightRequest="20"
                          Progress="0"
                          BackgroundColor="White"
                          ProgressColor="LightBlue" />
 
+            <!-- total water result-->
             <Label x:Name="waterTotalLabel"
                    FontSize="20"
                    FontAttributes="Bold"
@@ -88,15 +91,17 @@
                    HorizontalOptions="Center"
                    IsVisible="True" />
 
+            <!-- recommended water -->
             <Label x:Name="recommendedWaterLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
+            <!-- feedback water -->
             <Label x:Name="feedbackWaterLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
-
+            <!-- button log water -->
             <Button Text="Log Water"
                     BackgroundColor="LightBlue"
                     TextColor="Black"
@@ -108,12 +113,12 @@
                     HorizontalOptions="FillAndExpand"
                     Clicked="OnLogWaterClicked" />
 
-
+            
             <Label x:Name="statusLabel"
                    Style="{StaticResource InfoTextStyle}"
                    IsVisible="False" />
 
-
+            <!-- retunr to home -->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
                     Clicked="OnBackToHomeClicked" />

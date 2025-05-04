@@ -11,6 +11,7 @@ public partial class BmiPage : ContentPage
     {
         var gender = genderPicker.SelectedItem?.ToString();
 
+        // Checks if gender was selected
         if (string.IsNullOrEmpty(gender))
         {
             bmiValueLabel.IsVisible = false;
@@ -19,7 +20,7 @@ public partial class BmiPage : ContentPage
             return;
         }
 
-        // Try reading and converting height and weight
+        // converting height and weight input
         if (double.TryParse(heightEntry.Text, out double height) &&
             double.TryParse(weightEntry.Text, out double weight) &&
             height > 0)
@@ -27,34 +28,35 @@ public partial class BmiPage : ContentPage
             double bmi = weight / (height * height);
             string message;
 
-            // Slightly different ranges and messages based on gender
+            // results for males
             if (gender == "Male")
             {
                 if (bmi < 18.5)
-                    message = "Your BMI is below the healthy range. Consider speaking with a health professional.";
+                    message = "Your BMI is below the healthy range. Consider speaking with a health professional for more details.";
                 else if (bmi < 25)
-                    message = "You're in the healthy range. Keep it up!";
+                    message = "You are in the healthy range!";
                 else if (bmi < 30)
-                    message = "You're slightly over. Some regular activity and small changes can help.";
+                    message = "You are slightly over the reccomended BMI. Act on it today to see improvents.";
                 else
-                    message = "Your BMI is higher than recommended. Start small — it all adds up.";
+                    message = "Your BMI results are higher than recommended. Start making change today.";
             }
-            else // Female
+            else // for Females
             {
                 if (bmi < 18.5)
-                    message = "Your BMI is a bit low. Maybe check in with a professional for support.";
+                    message = "Your BMI is a bit lower than reccomended. Check in with a professional for advice.";
                 else if (bmi < 24)
-                    message = "Looks good! You're within the healthy range.";
+                    message = "Healthy BMI! You're within the reccomended range.";
                 else if (bmi < 29)
-                    message = "You're slightly above the ideal range. Consistency is key.";
+                    message = "You're slightly above the reccomended BMI range. Stay consistent for improvements.";
                 else
-                    message = "BMI is elevated — be kind to yourself and take things one step at a time.";
+                    message = "BMI is above the healthy range. Start today for improvemtns!";
             }
 
+            // Show result
             bmiValueLabel.Text = $"BMI: {bmi:F1}";
-
             bmiAdviceLabel.Text = message;
 
+            // Saves data globally
             UserData.Bmi = bmi;
             UserData.Gender = gender;
 
@@ -63,16 +65,16 @@ public partial class BmiPage : ContentPage
         }
         else
         {
-            // Invalid or missing input
+            // Invalid input message for valiodation
             bmiValueLabel.IsVisible = false;
             bmiAdviceLabel.Text = "Please enter a valid height and weight.";
             bmiAdviceLabel.IsVisible = true;
         }
     }
 
+    // return back to Home Page
     private void OnBackToHomeClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new HomePage();
     }
-
 }

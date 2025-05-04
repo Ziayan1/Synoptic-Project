@@ -5,12 +5,12 @@
 
     <Application.Resources>
 
-        <!-- Page background style (dark green) -->
+        <!-- green page background -->
         <Style x:Key="GreenPageStyle" TargetType="ContentPage">
             <Setter Property="BackgroundColor" Value="#2E8B57" />
         </Style>
 
-        <!-- Entry input style -->
+        <!-- Used for text inputs -->
         <Style x:Key="InputEntryStyle" TargetType="Entry">
             <Setter Property="BackgroundColor" Value="#f0f0f0" />
             <Setter Property="HeightRequest" Value="50" />
@@ -18,7 +18,7 @@
             <Setter Property="FontSize" Value="16" />
         </Style>
 
-        <!-- Page title label style -->
+        <!--  title  -->
         <Style x:Key="PageTitleStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="FontSize" Value="28" />
@@ -27,7 +27,7 @@
             <Setter Property="HorizontalOptions" Value="Center" />
         </Style>
 
-        <!-- Styled card-like button -->
+        <!-- Button card -->
         <Style x:Key="CardButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="#DAA520" />
             <Setter Property="TextColor" Value="White" />
@@ -39,7 +39,7 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         </Style>
 
-        <!-- Error message style -->
+        <!-- error label -->
         <Style x:Key="ErrorMessageStyle" TargetType="Label">
             <Setter Property="BackgroundColor" Value="#FFCCCC" />
             <Setter Property="TextColor" Value="#990000" />
@@ -50,8 +50,7 @@
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
-        <!-- Page info text style -->
-
+        <!-- info labels -->
         <Style x:Key="InfoTextStyle" TargetType="Label">
             <Setter Property="FontSize" Value="18" />
             <Setter Property="TextColor" Value="White" />
@@ -60,9 +59,7 @@
             <Setter Property="LineBreakMode" Value="WordWrap" />
         </Style>
 
-
-        <!-- Day of the week title -->
-
+        <!-- day of the week -->
         <Style x:Key="DayTitleStyle" TargetType="Label">
             <Setter Property="FontSize" Value="22" />
             <Setter Property="FontAttributes" Value="Bold" />
@@ -70,9 +67,6 @@
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="Margin" Value="0,10,0,10" />
         </Style>
-
-
-
 
     </Application.Resources>
 </Application>
