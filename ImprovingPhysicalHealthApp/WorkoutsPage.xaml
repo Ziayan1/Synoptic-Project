@@ -2,55 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ImprovingPhysicalHealthApp.WorkoutsPage"
-             Title="Workouts"
+             Title="Smart Workouts"
              Style="{StaticResource GreenPageStyle}">
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20">
 
-            <!-- Title -->
-            <Label Text="Workout Recommendations"
-                   Style="{StaticResource PageTitleStyle}" />
-
-            <!-- Smart suggestion display -->
-            <Label x:Name="suggestionLabel"
-                   TextColor="White"
+            <!-- Display the user's goal based on BMI -->
+            <Label x:Name="goalLabel"
+                   FontSize="20"
                    FontAttributes="Bold"
-                   FontSize="16" />
+                   TextColor="White"
+                   Margin="0,0,0,10" />
 
-            <!-- Filter buttons -->
-            <HorizontalStackLayout Spacing="10">
-                <Button Text="All"
-                        Style="{StaticResource CardButtonStyle}"
-                        BackgroundColor="#4682B4"
-                        Clicked="OnFilterClicked" />
+            <Label Text="Select Fitness Level:"
+                   Style="{StaticResource LabelStyle}" />
 
-                <Button Text="Home"
-                        Style="{StaticResource CardButtonStyle}"
-                        BackgroundColor="#4682B4"
-                        Clicked="OnFilterClicked" />
+            <Picker x:Name="fitnessPicker"
+                    Title="Choose Fitness Level"
+                    Style="{StaticResource InputEntryStyle}" />
 
-                <Button Text="Gym"
-                        Style="{StaticResource CardButtonStyle}"
-                        BackgroundColor="#4682B4"
-                        Clicked="OnFilterClicked" />
+            <Label x:Name="suggestionTitle"
+                   Text="Suggested Workouts:"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   IsVisible="False" />
 
-                <Button Text="Low Impact"
-                        Style="{StaticResource CardButtonStyle}"
-                        BackgroundColor="#4682B4"
-                        Clicked="OnFilterClicked" />
-            </HorizontalStackLayout>
+            <StackLayout x:Name="workoutList"
+                         Spacing="10" />
 
-            <!-- Workout Cards -->
-            <VerticalStackLayout x:Name="workoutList"
-                                 Spacing="15">
-                <!-- Cards will be added in code-behind -->
-            </VerticalStackLayout>
-
-            <!-- Back Button -->
             <Button Text="Back to Home"
                     Style="{StaticResource CardButtonStyle}"
-                    Clicked="OnBackClicked" />
+                    Clicked="OnBackToHomeClicked" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

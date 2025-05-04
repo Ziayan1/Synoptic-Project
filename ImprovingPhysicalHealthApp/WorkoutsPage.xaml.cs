@@ -2,109 +2,122 @@ namespace ImprovingPhysicalHealthApp;
 
 public partial class WorkoutsPage : ContentPage
 {
-    private List<Workout> allWorkouts;
-
     public WorkoutsPage()
     {
         InitializeComponent();
-        GenerateSmartSuggestion();
-        LoadWorkouts();
-        DisplayWorkouts("All");
+
+        if (UserData.Bmi == null)
+        {
+            DisplayAlert("BMI Required", "Please complete the BMI calculator first.", "OK");
+            Application.Current.MainPage = new HomePage();
+            return;
+        }
+
+        SetGoalLabel();
+
+        fitnessPicker.ItemsSource = new List<string> { "Beginner", "Intermediate", "Advanced" };
+        fitnessPicker.SelectedIndexChanged += OnFitnessLevelChanged;
     }
 
-    private void GenerateSmartSuggestion()
+    private void SetGoalLabel()
     {
         double bmi = UserData.Bmi ?? 22;
-        string fitnessLevel = UserData.FitnessLevel ?? "Beginner";
+
+        string goal;
+        if (bmi < 18.5)
+            goal = "Your Goal: Gain Weight";
+        else if (bmi > 25)
+            goal = "Your Goal: Lose Weight";
+        else
+            goal = "Your Goal: Stay Healthy";
+
+        goalLabel.Text = goal;
+    }
+
+    private void OnFitnessLevelChanged(object sender, EventArgs e)
+    {
+        if (fitnessPicker.SelectedIndex == -1)
+            return;
+
+        string level = fitnessPicker.SelectedItem.ToString();
+        double bmi = UserData.Bmi ?? 22;
+
+        var workouts = GetSuggestedWorkouts(bmi, level);
+
+        workoutList.Children.Clear();
+        suggestionTitle.IsVisible = true;
+
+        foreach (string workout in workouts)
+        {
+            workoutList.Children.Add(new Button
+            {
+                Text = workout,
+                BackgroundColor = Color.FromArgb("#2196F3"), // Blue buttons
+                TextColor = Colors.White,
+                CornerRadius = 15,
+                FontSize = 18,
+                HeightRequest = 80,
+                Margin = new Thickness(0, 10),
+                Padding = new Thickness(10),
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            });
+        }
+    }
+
+    private List<string> GetSuggestedWorkouts(double bmi, string level)
+    {
+        var results = new List<string>();
 
         if (bmi > 30)
         {
-            suggestionLabel.Text = $"Based on your BMI ({bmi:F1}) and '{fitnessLevel}' level, we recommend starting with low-impact cardio and short sessions.";
+            if (level == "Beginner")
+            {
+                results.Add("Walking - 20 min");
+                results.Add("Light Cycling - 15 min");
+                results.Add("Chair Squats - 3 sets");
+                results.Add("Arm Circles - 2 min");
+            }
+            else if (level == "Intermediate")
+            {
+                results.Add("Jogging - 20 min");
+                results.Add("Jump Rope - 5 min");
+                results.Add("Bodyweight Squats - 3 sets");
+                results.Add("Push-ups - 2 sets");
+            }
+            else
+            {
+                results.Add("HIIT - 20 min");
+                results.Add("Sprints - 10x100m");
+                results.Add("Burpees - 3 sets");
+                results.Add("Mountain Climbers - 3 sets");
+            }
         }
         else if (bmi < 18.5)
         {
-            suggestionLabel.Text = $"You're underweight (BMI {bmi:F1}). Try light strength workouts and eat high-protein meals.";
+            results.Add("Strength Training - Upper Body");
+            results.Add("Leg Press Machine");
+            results.Add("Dumbbell Rows");
+            results.Add("Protein Stretch Cool-down");
+
+            if (level != "Beginner")
+                results.Add("Weighted Squats - 3 sets");
         }
         else
         {
-            suggestionLabel.Text = $"Your BMI is healthy ({bmi:F1}). You're good to go with a balanced plan for your fitness level: {fitnessLevel}.";
+            results.Add("Brisk Walk - 30 min");
+            results.Add("Yoga - 15 min");
+            results.Add("Plank - 1 min");
+            results.Add("Resistance Band Workout");
+
+            if (level == "Advanced")
+                results.Add("Deadlifts - 3 sets");
         }
+
+        return results;
     }
 
-    private void LoadWorkouts()
-    {
-        allWorkouts = new List<Workout>
-        {
-            new Workout("Home Cardio", "20 min", 180, "Home"),
-            new Workout("Bodyweight Strength", "25 min", 200, "Home"),
-            new Workout("Treadmill Intervals", "30 min", 250, "Gym"),
-            new Workout("Full Body Stretch", "15 min", 80, "Low Impact"),
-            new Workout("Elliptical Session", "20 min", 160, "Low Impact"),
-            new Workout("Weight Training", "40 min", 300, "Gym"),
-            new Workout("Yoga Flow", "30 min", 120, "Low Impact"),
-            new Workout("HIIT Blast", "25 min", 280, "Home"),
-        };
-    }
-
-    private void DisplayWorkouts(string category)
-    {
-        workoutList.Children.Clear();
-
-        var filtered = category == "All"
-            ? allWorkouts
-            : allWorkouts.Where(w => w.Category == category).ToList();
-
-        foreach (var workout in filtered)
-        {
-            var card = new Frame
-            {
-                CornerRadius = 10,
-                Padding = 15,
-                BackgroundColor = Colors.White,
-                Content = new VerticalStackLayout
-                {
-                    Spacing = 5,
-                    Children =
-                    {
-                        new Label { Text = workout.Title, FontSize = 18, FontAttributes = FontAttributes.Bold, TextColor = Colors.Black },
-                        new Label { Text = $"Duration: {workout.Duration}", FontSize = 14, TextColor = Colors.Gray },
-                        new Label { Text = $"Burns ~{workout.Calories} kcal", FontSize = 14, TextColor = Colors.Gray }
-                    }
-                }
-            };
-
-            workoutList.Children.Add(card);
-        }
-    }
-
-    private void OnFilterClicked(object sender, EventArgs e)
-    {
-        if (sender is Button button)
-        {
-            string category = button.Text;
-            DisplayWorkouts(category);
-        }
-    }
-
-    private void OnBackClicked(object sender, EventArgs e)
+    private void OnBackToHomeClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new HomePage();
-    }
-}
-
-// Simple workout class
-public class Workout
-{
-    public string Title { get; }
-    public string Duration { get; }
-    public int Calories { get; }
-    public string Category { get; }
-
-    public Workout(string title, string duration, int calories, string category)
-    {
-        Title = title;
-        Duration = duration;
-        Calories = calories;
-        Category = category;
     }
 }
